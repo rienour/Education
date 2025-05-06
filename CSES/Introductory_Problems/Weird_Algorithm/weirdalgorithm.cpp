@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-  int weirdInput = 0;
+  unsigned long int weirdInput = 0;
 
   cin >> weirdInput;
 
