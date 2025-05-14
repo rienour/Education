@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : VectorSorting.cpp
-// Author      : Your name
+// Author      : Riley Eichenour
 // Version     : 1.0
 // Copyright   : Copyright © 2023 SNHU COCE
 // Description : Vector Sorting Algorithms
@@ -164,10 +164,10 @@ void quickSort(vector<Bid>& bids, int begin, int end) {
 
 }
 
-// FIXME (1a): Implement the selection sort logic over bid.title
-
 /**
- * Perform a selection sort on bid title
+ * Perform an inplace selection sort on bid title based on the
+ * lexical value of the characters.
+ *
  * Average performance: O(n^2))
  * Worst case performance O(n^2))
  *
@@ -175,19 +175,31 @@ void quickSort(vector<Bid>& bids, int begin, int end) {
  *            instance to be sorted
  */
 void selectionSort(vector<Bid>& bids) {
-    //define min as int (index of the current minimum bid)
+    int minIndex; // Variable to store the current minimum index
+    int i; // Declaration of nested iterarting variable
 
-    // check size of bids vector
-    // set size_t platform-neutral result equal to bid.size()
+    // Calculate the size of the bids vector
+    size_t vecSize = bids.size();
 
-    // pos is the position within bids that divides sorted/unsorted
-    // for size_t pos = 0 and less than size -1 
-        // set min = pos
-        // loop over remaining elements to the right of position
-            // if this element's title is less than minimum title
-                // this element becomes the minimum
-        // swap the current minimum with smaller one found
-            // swap is a built in vector method
+    // Iterate over each of the bids
+    for(size_t index = 0; index < vecSize - 1; index++) {
+      // Set the minimum index to start checking
+      minIndex = index;
+
+      // Iterate over the unsorted elements past the last sorted item
+      for(i = index; i < vecSize - 1; i++) {
+        // if this element's title is less than minimum title
+        if(&bids[i].title < &bids[minIndex].title) {
+          // this element becomes the minimum
+          minIndex = i;
+        }
+      }
+
+      // Only swap the elements if there is a need to do so
+      if(minIndex != index) {
+        swap(bids[minIndex], bids[index]);
+      }
+    }
 }
 
 /**
@@ -262,7 +274,20 @@ int main(int argc, char* argv[]) {
 
             break;
 
-        // FIXME (1b): Invoke the selection sort and report timing results
+        case 3:
+            // Initialize a timer variable before sorting bids
+            ticks = clock();
+
+            // Perform selection sort on the titles of the loaded bids
+            selectionSort(bids);
+
+            ticks = clock() - ticks; // current clock ticks minus starting clock ticks
+
+            cout << bids.size() << " bids sorted" << endl;
+            cout << "time: " << ticks << " clock ticks" << endl;
+            cout << "time: " << ticks * 1.0 / CLOCKS_PER_SEC << " seconds" << endl;
+
+            break;
 
         // FIXME (2b): Invoke the quick sort and report timing results
 
