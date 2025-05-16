@@ -102,16 +102,26 @@ LinkedList::~LinkedList() {
 
 /**
  * Append a new bid to the end of the list
+ *
+ * @param New bid to add in the nodes of the linked list
  */
 void LinkedList::Append(Bid bid) {
-    // FIXME (2): Implement append logic
-    //Create new node
-    //if there is nothing at the head...
-            // new node becomes the head and the tail
-    //else 
-        // make current tail node point to the new node
-        // and tail becomes the new node
-    //increase size count
+    // Create new node
+    Node* newNode = new Node(bid);
+
+    // If the list is currently empty, set the pointers to the new element
+    if(this->head == nullptr) {
+      this->head = newNode;
+      this->tail = newNode;
+    }
+    // Otherwise append the item and move the tail
+    else {
+      this->tail->next = newNode;
+      this->tail = newNode;
+    }
+
+    // Increment the list size variable to reflect addition
+    this->size++;
 }
 
 /**
