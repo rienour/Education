@@ -126,17 +126,26 @@ void LinkedList::Append(Bid bid) {
 
 /**
  * Prepend a new bid to the start of the list
+ *
+ * @param New bid to add in the nodes of the linked list
  */
 void LinkedList::Prepend(Bid bid) {
-    // FIXME (3): Implement prepend logic
     // Create new node
+    Node* newNode = new Node(bid);
 
-    // if there is already something at the head...
-        // new node points to current head as its next node
+    // If the list is currently empty, set the pointers to the new element
+    if(this->head == nullptr) {
+      this->head = newNode;
+      this->tail = newNode;
+    }
+    // Otherwise prepend the item and move the head
+    else {
+      newNode->next = this->head;
+      this->head = newNode;
+    }
 
-    // head now becomes the new node
-    //increase size count
-
+    // Increment the list size variable to reflect addition
+    this->size++;
 }
 
 /**
