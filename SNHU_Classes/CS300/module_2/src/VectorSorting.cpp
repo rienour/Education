@@ -111,32 +111,53 @@ vector<Bid> loadBids(string csvPath) {
     return bids;
 }
 
-// FIXME (2a): Implement the quick sort logic over bid.title
-
 /**
  * Partition the vector of bids into two parts, low and high
  *
  * @param bids Address of the vector<Bid> instance to be partitioned
  * @param begin Beginning index to partition
  * @param end Ending index to partition
+ *
+ * @return new high index
  */
 int partition(vector<Bid>& bids, int begin, int end) {
     //set low and high equal to begin and end
+    int high = end;
+    int low = begin;
 
     // Calculate the middle element as middlePoint (int)
     // Set Pivot as middlePoint element title to compare (string)  
+    int middlePoint = begin + ((end  - begin) / 2); // Integer division intentional for floor behavior through truncation
+    string* pivotTitle = &bids[middlePoint].title;
   
     // while not done 
+    while(high > low) {
 
-        // keep incrementing low index while bids[low].title < Pivot
-       
-        // keep decrementing high index while Pivot < bids[high].title
+      // keep incrementing low index while bids[low].title < Pivot
+      while(&bids[low].title < pivotTitle) {
+        low++;
+      }
 
-        /* If there are zero or one elements remaining,
-            all bids are partitioned. Return high */
-       // else swap the low and high bids (built in vector method)
-            // move low and high closer ++low, --high
+      // keep decrementing high index while Pivot < bids[high].title
+      while(&bids[high].title > pivotTitle) {
+        high--;
+      }
+
+      // If there are zero or one elements remaining,
+      if(low >= high) {
+        // all bids are partitioned. Return high
+        break;
+      } else {
+        // else swap the low and high bids (built in vector method)
+        swap(bids[low], bids[high]);
+        // move low and high closer ++low, --high
+        low++;
+        high--;
+      }
+    }
+
     //return high;
+    return high;
 }
 
 /**
@@ -150,17 +171,27 @@ int partition(vector<Bid>& bids, int begin, int end) {
  */
 void quickSort(vector<Bid>& bids, int begin, int end) {
     //set mid equal to 0
+    int mid = 0;
 
     /* Base case: If there are 1 or zero bids to sort,
      partition is already sorted otherwise if begin is greater
      than or equal to end then return*/
+    if(end - begin < 1) {
+      return;
+    } else if (begin >= end) {
+      return;
+    }
 
     /* Partition bids into low and high such that
      midpoint is location of last element in low */
      
+    mid = partition(bids, begin, end);
+
     // recursively sort low partition (begin to mid)
+    quickSort(bids, begin, mid);
 
     // recursively sort high partition (mid+1 to end)
+    quickSort(bids, mid + 1, end);
 
 }
 
@@ -289,7 +320,18 @@ int main(int argc, char* argv[]) {
 
             break;
 
-        // FIXME (2b): Invoke the quick sort and report timing results
+        case 4:
+            // Initialize a timer variable before loading bids
+            ticks = clock();
+
+            quickSort(bids, 0, bids.size() - 1);
+            // Calculate elapsed time and display result
+            ticks = clock() - ticks; // current clock ticks minus starting clock ticks
+            cout << bids.size() << " quick sorted" << endl;
+            cout << "time: " << ticks << " clock ticks" << endl;
+            cout << "time: " << ticks * 1.0 / CLOCKS_PER_SEC << " seconds" << endl;
+
+            break;
 
         }
     }
