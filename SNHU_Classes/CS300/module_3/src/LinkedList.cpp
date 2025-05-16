@@ -218,19 +218,31 @@ void LinkedList::Remove(string bidId) {
  * @param bidId The bid id to search for
  */
 Bid LinkedList::Search(string bidId) {
-    // FIXME (6): Implement search logic
-
     // special case if matching bid is the head
-
-    // start at the head of the list
+    if(this->head->bid.bidId == bidId) {
+      return this->head->bid;
+    }
+    
+    // start at element after previously checked head
+    Node* curNode = this->head->next;
 
     // keep searching until end reached with while loop (current != nullptr)
+    while(curNode != nullptr) {
         // if the current node matches, return current bid
-        // else current node is equal to next node
+      if(curNode->bid.bidId == bidId) {
+        return curNode->bid;
+      }
+      // else current node is equal to next node
+      else {
+        curNode = curNode->next;
+      }
+    }
 
-    //(the next two statements will only execute if search item is not found)
-        //create new empty bid
-        //return empty bid 
+    //create new empty bid
+    Bid notFound = Bid();
+
+    //return empty bid 
+    return notFound;
 }
 
 /**
