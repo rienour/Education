@@ -79,8 +79,9 @@ public:
  * Default constructor
  */
 LinkedList::LinkedList() {
-    // FIXME (1): Initialize housekeeping variables
-    //set head and tail equal to nullptr
+    // Initialize head and tail variables to nullptr
+    this->head = nullptr;
+    this->tail = nullptr;
 }
 
 /**
