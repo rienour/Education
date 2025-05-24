@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : LinkedList.cpp
-// Author      : Your Name
+// Author      : Riley Eichenour
 // Version     : 1.0
 // Copyright   : Copyright © 2023 SNHU COCE
 // Description : Lab 3-2 Lists and Searching
