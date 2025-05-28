@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : HashTable.cpp
-// Author      : Your Name
+// Author      : Riley Eichenour
 // Version     : 1.0
 // Copyright   : Copyright © 2023 SNHU COCE
 // Description : Lab 4-2 Hash Table
