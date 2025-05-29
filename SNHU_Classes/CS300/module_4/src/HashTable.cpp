@@ -113,9 +113,27 @@ HashTable::HashTable(unsigned int size) {
  * Destructor
  */
 HashTable::~HashTable() {
-    // FIXME (2): Implement logic to free storage when class is destroyed
+    // Allocate temporary node pointer for deletions
+    Node* tempNode = nullptr;
+
+    // Allocate starting node for each list
+    Node* startNode = nullptr;
+
+    // Iterate through each vector linked list
+    for(int i = 0; i < this->nodes.size(); i++) {
+      // Get the starting node next pointer
+      startNode = this->nodes.at(i).next;
+
+      // Traverse the linked list to delete all heap allocated nodes
+      while(startNode != nullptr) {
+        tempNode = startNode;
+        startNode = tempNode->next;
+        delete tempNode;
+      }
+    }
     
-    // erase nodes beginning
+    // Erase the memory allocated by the nodes vector
+    this->nodes.clear();
 }
 
 /**
