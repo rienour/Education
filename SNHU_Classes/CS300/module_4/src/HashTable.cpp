@@ -268,18 +268,32 @@ void HashTable::Remove(string bidId) {
 Bid HashTable::Search(string bidId) {
     Bid bid;
 
-    // FIXME (7): Implement logic to search for and return a bid
+    // Calculate key for bidId
+    unsigned int bidKey = this->hash(atoi(bidId.c_str()));
 
-    // create the key for the given bid
-    // if entry found for the key
-         //return node bid
+    // Get reference to first node in bucket
+    Node* curNode = &this->nodes.at(bidKey);
 
-    // if no entry found for the key
-      // return bid
-    // while node not equal to nullptr
-        // if the current node matches, return it
-        //node is equal to next node
+    // If the bucket has elements
+    if(curNode->key != UINT_MAX){
+      // Special case where the head is the target
+      if(curNode->bid.bidId == bidId) {
+        // Early return since the item has been found
+        return curNode->bid;
+      }
 
+      // Traverse the bucket list until there is no next element
+      while(curNode->next != nullptr) {
+        if(curNode->bid.bidId == bidId){
+          return curNode->bid;
+        }
+
+        // Increment curNode pointer
+        curNode = curNode->next;
+      }
+    }
+
+    // If no element is found return default bid
     return bid;
 }
 
