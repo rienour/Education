@@ -142,12 +142,14 @@ HashTable::~HashTable() {
  * unsigned int to prevent undefined results
  * of a negative list index.
  *
+ * The key is calculated based on the key
+ * modulo the tableSize of the instance.
+ *
  * @param key The key to hash
  * @return The calculated hash
  */
 unsigned int HashTable::hash(int key) {
-    // FIXME (3): Implement logic to calculate a hash value
-    // return key tableSize
+    return key % (this->tableSize);
 }
 
 /**
