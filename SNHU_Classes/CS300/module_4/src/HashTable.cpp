@@ -91,9 +91,8 @@ public:
  * Default constructor
  */
 HashTable::HashTable() {
-    // FIXME (1): Initialize the structures used to hold bids
-    
     // Initalize node structure by resizing tableSize
+    this->nodes.resize(tableSize);
 }
 
 /**
@@ -102,8 +101,11 @@ HashTable::HashTable() {
  * by reducing collisions without wasting memory.
  */
 HashTable::HashTable(unsigned int size) {
-    // invoke local tableSize to size with this->
-    // resize nodes size
+    // Initalize node structure by resizing tableSize
+    this->nodes.resize(size);
+
+    // Update the instance tableSize
+    this->tableSize = size;
 }
 
 
