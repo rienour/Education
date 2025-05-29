@@ -223,9 +223,41 @@ void HashTable::PrintAll() {
  * @param bidId The bid id to search for
  */
 void HashTable::Remove(string bidId) {
-    // FIXME (6): Implement logic to remove a bid
-    // set key equal to hash atoi bidID cstring
-    // erase node begin and key
+    // Set key equal to hash atoi bidID cstring
+    unsigned int bidKey = this->hash(atoi(bidId.c_str()));
+
+    // Get reference to first node in bucket
+    Node* curNode = &this->nodes.at(bidKey);
+
+    // Special case where the head is the target and only item in bucket
+    if(curNode->bid.bidId == bidId && curNode->next == nullptr) {
+      // Update the bucket to the empty state
+      this->nodes.at(bidKey) = Node();
+
+      // Early return since the item has been removed
+      return;
+    }
+
+    // Traverse the bucket to locate the target node
+    while(curNode->next != nullptr) {
+      // If the next node is the target node
+      if(curNode->next->bid.bidId == bidId) {
+        // Create temporary pointer to target node
+        Node* tempNode = curNode->next;
+
+        // Move the pointer of the node prior to the target node
+        curNode->next = tempNode->next;
+
+        // Delete memory allocate to tempNode
+        delete tempNode;
+
+        // Early return since the target id has been removed
+        return;
+      }
+
+      // Increment the target pointer
+      curNode = curNode->next;
+    }
 }
 
 /**
