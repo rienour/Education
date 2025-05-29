@@ -158,30 +158,63 @@ unsigned int HashTable::hash(int key) {
  * @param bid The bid to insert
  */
 void HashTable::Insert(Bid bid) {
-    // FIXME (4): Implement logic to insert a bid
-    // create the key for the given bid
-    // retrieve node using key
-    // if no entry found for the key
-        // assign this node to the key position
-    // else if node is not used
-         // assing old node key to UNIT_MAX, set to key, set old node to bid and old node next to null pointer
-    // else find the next open node
-            // add new newNode to end
+  // Calculate the key for the given bid
+  unsigned int bidKey = this->hash(atoi(bid.bidId.c_str()));
+
+  // Retrieve the first node in the bucket
+  Node* node = &this->nodes.at(bidKey);
+
+  // If the bucket doesn't have items already
+  if(node->key == UINT_MAX) {
+    // Assign this node to the key position
+    nodes.at(bidKey) = Node(bid, bidKey);
+  }
+  // Otherwise append a new node to the end of the list
+  else {
+    // Traverse to the end of the list to find tail
+    while(node->next != nullptr){
+      node = node->next;
+    }
+
+    // Append new node to the list
+    node->next = new Node(bid, bidKey);
+  }
 }
 
 /**
  * Print all bids
  */
 void HashTable::PrintAll() {
-    // FIXME (5): Implement logic to print all bids
-    // for node begin to end iterate
-    //   if key not equal to UINT_MAx
-            // output key, bidID, title, amount and fund
-            // node is equal to next iter
-            // while node not equal to nullptr
-               // output key, bidID, title, amount and fund
-               // node is equal to next node
+  // Iterate through each bucket
+  for(vector<HashTable::Node>::iterator i = this->nodes.begin(); i != this->nodes.end(); i++) {
+    // Get the current list head node
+    Node curListNode = *i;
 
+    // If the key is not the default
+    if(curListNode.key != UINT_MAX) {
+      cout <<
+        "Key: " << curListNode.key <<
+        " | " << curListNode.bid.bidId <<
+        " | " << curListNode.bid.title <<
+        " | " << curListNode.bid.amount <<
+        " | " << curListNode.bid.fund <<
+        endl;
+
+      // If there are collision keys to print
+      while(curListNode.next != nullptr) {
+        cout <<
+          curListNode.key <<
+          "> | " << curListNode.bid.bidId <<
+          " | " << curListNode.bid.title <<
+          " | " << curListNode.bid.amount <<
+          " | " << curListNode.bid.fund <<
+          endl;
+
+        // Assign iteration node to the next node
+        curListNode = *(curListNode.next);
+      }
+    }
+  }
 }
 
 /**
