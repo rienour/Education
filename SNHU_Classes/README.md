@@ -10,3 +10,4 @@ Portfolio Repository for work done at SNHU
 - CS300: Data Structures and Algorithms Analysis and Design
 - CS305: Software Security
 - CS320: Software QA and Automation
+- CS360: Mobile Architecture and Programming
