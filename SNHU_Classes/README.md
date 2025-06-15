@@ -6,3 +6,4 @@ Portfolio Repository for work done at SNHU
 - CS210: Programming Languages
 - CS250: Software Development Life Cycle
 - CS255: System Analysis and Design
+- CS300: Data Structures and Algorithms Analysis and Design
