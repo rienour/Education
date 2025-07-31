@@ -23,11 +23,46 @@
     - Output: false
 */
 const isValid = (str: string): boolean => {
+  // Define object to track valid items combinations
+  const validPairings = {
+    '(': ')',
+    '{': '}',
+    '[': ']',
+  } as const;
 
+  // Stack to track the characters as they are seen
+  const charStack: string[] = [];
+  // Iterate through the items
+  for(const item of str.split('')) {
+    // If it's an opening bracket
+    if(validPairings[item]) {
+      charStack.push(item);
+    } else {
+      // It's a closing without an opening
+      if (charStack.length === 0) {
+        return false;
+      }
+      // It's a closing and the opening needs to be checked
+      else {
+        const stackTop = charStack[charStack.length - 1];
+        if (validPairings[stackTop] === item) {
+          charStack.pop()
+        } else {
+         return false;
+        }
+      }
+    }
+  }
+
+  return charStack.length === 0;
 };
 
-isValid("()") // true
-isValid("()[]{}") // true
-isValid("(]") // false
-isValid("([])") // true
-isValid("([)]") // false
+console.log(
+  [
+    isValid("()"), // true
+    isValid("()[]{}"), // true
+    isValid("(]"), // false
+    isValid("([])"), // true
+    isValid("([)]"), // false
+  ].map(String)
+)
